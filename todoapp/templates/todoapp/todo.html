@@ -1,11 +1,16 @@
 {% extends 'base.html'%}
 {% block content%}
-<h2>Todo</h2>
+<h2>Todo List</h2>
 <ul>
     {% for t in todo_list %}
-        <li> {{t.task}}</li>
+        <li> 
+            <a href="{% url 'detail' id=t.id %}">{{t.task}}</a> - Due: {{t.due_date}} <span class="label label-primary">{{t.category_id}}</span>
+            <form action="/deleteTask/{{t.id}}/" method = "post">{% csrf_token %}
+            <input type="submit" value="Done"></form>  
+        </li>
     {% endfor %}
 </ul>
+
 {% endblock %}
 
 

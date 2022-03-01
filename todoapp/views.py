@@ -3,6 +3,8 @@ from .models import TodoList, Category, User
 from django.urls import reverse_lazy
 from .forms import CategoryForm, TaskForm
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+
 
 # Create your views here.
 def index(request):
@@ -27,6 +29,11 @@ def newTask(request):
      else:
           form=TaskForm()
      return render(request, 'todoapp/newtask.html', {'form': form})
+
+def deleteTask(request, t):
+    task = TodoList.objects.get(id= t)
+    task.delete()
+    return HttpResponseRedirect('/todoapp/todo/') 
 
 @login_required  
 def newCategory(request):
